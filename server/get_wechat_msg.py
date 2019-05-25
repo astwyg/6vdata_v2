@@ -5,6 +5,8 @@ import os, time
 import selenium
 from selenium import webdriver
 
+import sys
+sys.path.extend([os.path.join(os.path.dirname(__file__), '..'),])
 from conf.conf import get_env
 
 # load django env

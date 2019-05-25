@@ -1,6 +1,6 @@
 import sys, os, json, platform
 
-with open(os.path.join(os.path.abspath(__file__),'..','conf.json'),"r") as f:
+with open(os.path.join(os.path.abspath("."),"conf",'conf.json'),"r") as f:
     config = json.loads(f.read())
 
 
