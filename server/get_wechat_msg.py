@@ -2,8 +2,9 @@
 不好搞, 现在搜狗的接口已经很难直接用爬虫爬取公众号链接了, 因此使用selenium驱动浏览器.
 '''
 import os, time
-import selenium
 from selenium import webdriver
+
+from server.stocks import get_stocks
 
 import sys
 sys.path.extend([os.path.join(os.path.dirname(__file__), '..'),])
@@ -69,7 +70,6 @@ def get_wechat_msg(stock, article=10, sleep=3):
     browser.quit()
 
 if __name__ == "__main__":
-    get_wechat_msg({
-        "name":"深科技",
-        "code":"000021"
-    })
+    all_stocks = get_stocks()
+    for stock in all_stocks:
+        get_wechat_msg(stock)

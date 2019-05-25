@@ -25,6 +25,7 @@
 
 * 在linux下, 尤其是只有命令行的状态下, chrome driver很难跑起来, 常常报`chromedriver unexpectedly exited. Status code was: 127`, 可以用`sudo apt-get install -y chromium-browser`一把解决依赖问题.
 * 在linux下, 尤其是只有命令行的状态下, chrome driver很难跑起来, 除了依赖, 而且没有屏幕, 此问题参考[这里](https://stackoverflow.com/questions/10399557/is-it-possible-to-run-selenium-firefox-web-driver-without-a-gui)
+* 在linux, 记得安装`apt install python3.6-dev`, 否则mysql连接器各种奇奇怪怪报错.
 
 # dev blog
 
