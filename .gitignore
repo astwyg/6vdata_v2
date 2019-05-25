@@ -3,3 +3,4 @@
 /env
 /.idea
 /webserver/db.sqlite3
+/conf/conf.json
