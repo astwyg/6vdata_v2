@@ -4,11 +4,11 @@
 import os, time
 from selenium import webdriver
 
-from server.stocks import get_stocks
-
 import sys
 sys.path.extend([os.path.join(os.path.dirname(__file__), '..'),])
 from conf.conf import get_env
+
+from server.stocks import get_stocks
 
 # load django env
 import sys
