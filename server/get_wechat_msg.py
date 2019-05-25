@@ -42,7 +42,10 @@ def get_wechat_msg(stock, article=10, sleep=3):
     if get_env() == "debug":
         browser = webdriver.Chrome(os.path.join(os.path.dirname(__file__), 'driver', "chromedriver.exe"))
     else:
-        browser = webdriver.Chrome(os.path.join(os.path.dirname(__file__), 'driver', "chromedriver"))
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_argument('--headless')
+        chrome_options.add_argument('--no-sandbox')
+        browser = webdriver.Chrome(os.path.join(os.path.dirname(__file__), 'driver', "chromedriver"), chrome_options=chrome_options)
 
     browser.get("https://weixin.sogou.com/weixin?type=2&query={}".format(stock["name"]))
     browser.find_element_by_link_text("搜索工具").click()
