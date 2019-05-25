@@ -29,6 +29,7 @@ def save_wechat_msg(stock, title, content, url):
         url = url
     )
     server_logger.debug("{} saved.".format(title))
+    print("success")
     c.save()
 
 def get_wechat_msg(stock, article=10, sleep=3):
