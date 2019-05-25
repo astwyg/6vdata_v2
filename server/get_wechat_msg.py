@@ -7,9 +7,25 @@ from selenium import webdriver
 
 from conf.conf import get_env
 
-def save_wechat_msg(title, content):
-    print(title)
-    print(content)
+# load django env
+import sys
+from django.core.wsgi import get_wsgi_application
+sys.path.extend([os.path.join(os.path.dirname(__file__), '..', "webserver"),])
+os.environ.setdefault("DJANGO_SETTINGS_MODULE","webserver.settings")
+application = get_wsgi_application()
+from wechat_msg.models import Content
+
+from conf.log import server_logger
+
+def save_wechat_msg(stock, title, content, url):
+    c = Content(
+        code = stock["code"],
+        title = "[{}]{}".format(stock["name"], title),
+        info = content,
+        url = url
+    )
+    server_logger.debug("{} saved.".format(title))
+    c.save()
 
 def get_wechat_msg(stock, article=10, sleep=3):
     '''
@@ -34,17 +50,18 @@ def get_wechat_msg(stock, article=10, sleep=3):
         article_link.click()
         windows = browser.window_handles
         browser.switch_to.window(windows[-1])
+        time.sleep(sleep) # wait js finish
         title = browser.find_element_by_xpath("//h2[@id='activity-name']").text
         content = browser.find_element_by_xpath("//div[@id='js_content']").get_attribute('innerHTML')
-        save_wechat_msg(title, content)
+        save_wechat_msg(stock, title, content, browser.current_url)
         browser.close()
         windows = browser.window_handles
         browser.switch_to.window(windows[0])
-        time.sleep(sleep)
 
     browser.quit()
 
 if __name__ == "__main__":
     get_wechat_msg({
-        "name":"平安银行"
+        "name":"深科技",
+        "code":"000021"
     })
