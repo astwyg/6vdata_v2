@@ -44,12 +44,11 @@ def get_wechat_msg(stock, article=10, sleep=3):
         browser = webdriver.Chrome(os.path.join(os.path.dirname(__file__), 'driver', "chromedriver.exe"))
     else:
         chrome_options = webdriver.ChromeOptions()
-        # chrome_options.add_argument('--headless')
+        # chrome_options.add_argument('--headless') # 对于sogou来说, 这样需要输入验证码
         chrome_options.add_argument('--no-sandbox')
         browser = webdriver.Chrome(os.path.join(os.path.dirname(__file__), 'driver', "chromedriver"), chrome_options=chrome_options)
 
     browser.get("https://weixin.sogou.com/weixin?type=2&query={}".format(stock["name"]))
-    print(browser.page_source.encode("utf-8"))
     browser.find_element_by_link_text("搜索工具").click()
     browser.find_element_by_link_text("全部时间").click()
     browser.find_element_by_link_text("一天内").click()
