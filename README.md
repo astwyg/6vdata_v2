@@ -1,5 +1,6 @@
 # 6vdata_v2
 6vdata是一个面向A股市场的数据分析平台和工具.
+请访问: http://6vdata.com
 
 # 依赖
 
@@ -16,6 +17,10 @@
 * data: 数据
 * tools: 数据转移, 备份等工具
 
+# 特别感谢
+
+* [tushare](https://tushare.pro/)提供股票基础数据
+
 
 # dev blog
 
@@ -27,4 +32,4 @@
 
 TODO:
 
-- [] log还没搞.
+- [ ] log还没搞.
