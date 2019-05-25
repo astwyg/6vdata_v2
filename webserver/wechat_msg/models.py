@@ -9,7 +9,7 @@ class Content(models.Model):
     code = models.CharField(verbose_name="股票代码", max_length=10)
     title = models.CharField(verbose_name="标题", max_length=100)
     _info = models.CharField(verbose_name="内容对应的mongoid", blank=True, null=True, max_length=50)  # to mongodb
-    url = models.CharField(verbose_name="url", max_length=100)
+    url = models.CharField(verbose_name="url", max_length=255)
     time = models.DateTimeField(default=timezone.now)
 
     def get_info(self):

@@ -27,7 +27,7 @@ def save_wechat_msg(stock, title, content, url):
         code = stock["code"],
         title = "[{}]{}".format(stock["name"], title),
         info = content,
-        url = url
+        url = url[:255]
     )
     server_logger.debug("{} saved.".format(title))
     print("success")
