@@ -1,6 +1,7 @@
 import os
 import sys
 sys.path.append("..")
+sys.path.extend([os.path.join(os.path.dirname(__file__), '..',".."),])
 
 from conf.conf import get_conf, get_env
 
@@ -78,7 +79,7 @@ if get_env() == "debug":
 else:
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql',
+            'ENGINE': 'django.db.backends.mysql',
             'NAME': 'site6vdata',
             'USER': get_conf("mysql_username"),
             'PASSWORD': get_conf("mysql_password"),
