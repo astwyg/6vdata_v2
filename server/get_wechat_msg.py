@@ -62,8 +62,10 @@ def get_wechat_msg(stock, article=10, sleep=3):
             'Accept-Language: zh-CN,zh;q=0.9')
 
         browser = webdriver.Chrome(os.path.join(os.path.dirname(__file__), 'driver', "chromedriver1"), chrome_options=chrome_options)
-        browser.get("https://weixin.sogou.com/weixin?type=2&query={}".format(stock["name"])) # 先访问一次主页, 然后插入已经输入验证码的cookie
-        # browser.delete_all_cookies()
+
+        browser.delete_all_cookies()
+        browser.get(
+            "https://weixin.sogou.com/weixin?type=2&query={}".format(stock["name"]))  # 先访问一次主页, 然后插入已经输入验证码的cookie
         cookies = {
             'ABTEST': '7|1558860870|v1',
             #'IPLOC': 'CN8100',
