@@ -63,7 +63,7 @@ def get_wechat_msg(stock, article=10, sleep=3):
 
         browser = webdriver.Chrome(os.path.join(os.path.dirname(__file__), 'driver', "chromedriver1"), chrome_options=chrome_options)
         browser.delete_all_cookies()
-        browser.add_cookie({
+        cookies = {
             'ABTEST': '7|1558860870|v1',
             'IPLOC': 'CN8100',
             'SUID' : 'BC01DE9A771A910A000000005CEA5447',
@@ -72,7 +72,12 @@ def get_wechat_msg(stock, article=10, sleep=3):
             'SNUID':'13AE6E35AFB526693AFBDD61B049243C',
             'successCount':'1|Sun, 26 May 2019 08:59:43 GMT',
             'JSESSIONID':'aaa-gk1GKzZ51dNVN9fRw'
-        })
+        }
+        for name, value in cookies.items():
+            browser.add_cookie({
+                'name': name,
+                'value': value
+            })
         # browser = webdriver.PhantomJS(os.path.join(os.path.dirname(__file__), 'driver', "phantomjs")) # chrome has kinds of problems under cli only linux
         # browser.set_window_size(1024, 768)
 
