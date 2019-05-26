@@ -1,7 +1,7 @@
 '''
 不好搞, 现在搜狗的接口已经很难直接用爬虫爬取公众号链接了, 因此使用selenium驱动浏览器.
 '''
-import os, time, traceback
+import os, time, traceback, random
 import selenium.common
 from selenium import webdriver
 
@@ -54,7 +54,12 @@ def get_wechat_msg(stock, article=10, sleep=3):
         # chrome_options.add_argument("--disable-extensions")
         # chrome_options.add_argument("--disable-gpu")
         # chrome_options.add_argument("--disable-dev-shm-usage")
-        browser = webdriver.Chrome(os.path.join(os.path.dirname(__file__), 'driver', "chromedriver"), chrome_options=chrome_options)
+        chrome_options.add_argument(
+            'user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.{} Safari/537.36"'.format(random.randint(0,999)
+))
+
+        browser = webdriver.Chrome(os.path.join(os.path.dirname(__file__), 'driver', "chromedriver1"), chrome_options=chrome_options)
+        browser.delete_all_cookies()
         # browser = webdriver.PhantomJS(os.path.join(os.path.dirname(__file__), 'driver', "phantomjs")) # chrome has kinds of problems under cli only linux
         # browser.set_window_size(1024, 768)
 
