@@ -47,10 +47,9 @@ def get_wechat_msg(stock, article=10, sleep=3):
         chrome_options = webdriver.ChromeOptions()
         # chrome_options.add_argument('--headless') # 对于sogou来说, 这样需要输入验证码
         chrome_options.add_argument('--no-sandbox')
+        chrome_options.add_argument("--disable-extensions")
         chrome_options.add_argument("--disable-gpu")
         chrome_options.add_argument("--disable-dev-shm-usage")
-        chrome_options.add_argument("--screen-size=1200x800")
-        chrome_options.add_argument('blink-settings=imagesEnabled=false')
         browser = webdriver.Chrome(os.path.join(os.path.dirname(__file__), 'driver', "chromedriver"), chrome_options=chrome_options)
         # browser = webdriver.PhantomJS(os.path.join(os.path.dirname(__file__), 'driver', "phantomjs")) # chrome has kinds of problems under cli only linux
         # browser.set_window_size(1024, 768)
