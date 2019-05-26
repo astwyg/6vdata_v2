@@ -66,23 +66,24 @@ def get_wechat_msg(stock, article=10, sleep=30):
         browser.delete_all_cookies()
         browser.get(
             "https://weixin.sogou.com/weixin?type=2&query={}".format(stock["name"]))  # 先访问一次主页, 然后插入已经输入验证码的cookie
-        cookies = {
-            #'ABTEST': '7|1558860870|v1',
-            #'IPLOC': 'CN8100',
-            #'SUID' : 'BC01DE9A771A910A000000005CEA5447',
-            #'PHPSESSID' : 'kg0lsvv09l2rjolj09o0mu9pa5',
-            #'SUV':'003F33BE9ADE01BC5CEA544765246715',
-            'SNUID':'5B6A18D3BCB8347A5F713FE5BDD5679A',  # 已明确, 这个id是最重要的, 判断用户是否输入过验证码
-            'successCount':'1|{}'.format(datetime.datetime.utcnow().strftime("%a, %d %b %Y %H:%M:%S GMT")),
-            'weixinIndexVisited':'1',
-            'seccodeRight':'success'
-            #'JSESSIONID':'aaa-gk1GKzZ51dNVN9fRw'
-        }
-        for name, value in cookies.items():
-            browser.add_cookie({
-                'name': name,
-                'value': value
-            })
+        # cookies = {
+        #     #'ABTEST': '7|1558860870|v1',
+        #     #'IPLOC': 'CN8100',
+        #     #'SUID' : 'BC01DE9A771A910A000000005CEA5447',
+        #     #'PHPSESSID' : 'kg0lsvv09l2rjolj09o0mu9pa5',
+        #     #'SUV':'003F33BE9ADE01BC5CEA544765246715',
+        #     'SNUID':'5B6A18D3BCB8347A5F713FE5BDD5679A',  # 已明确, 这个id是最重要的, 判断用户是否输入过验证码
+        #     'successCount':'1|{}'.format(datetime.datetime.utcnow().strftime("%a, %d %b %Y %H:%M:%S GMT")),
+        #     'weixinIndexVisited':'1',
+        #     'seccodeRight':'success'
+        #     #'JSESSIONID':'aaa-gk1GKzZ51dNVN9fRw'
+        # }
+        # for name, value in cookies.items():
+        #     browser.add_cookie({
+        #         'name': name,
+        #         'value': value
+        #     })
+
         # browser = webdriver.PhantomJS(os.path.join(os.path.dirname(__file__), 'driver', "phantomjs")) # chrome has kinds of problems under cli only linux
         # browser.set_window_size(1024, 768)
 
