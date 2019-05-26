@@ -44,12 +44,12 @@ def get_wechat_msg(stock, article=10, sleep=3):
     if get_env() == "debug":
         browser = webdriver.Chrome(os.path.join(os.path.dirname(__file__), 'driver', "chromedriver.exe"))
     else:
-        # chrome_options = webdriver.ChromeOptions()
-        # # chrome_options.add_argument('--headless') # 对于sogou来说, 这样需要输入验证码
+        chrome_options = webdriver.ChromeOptions()
+        # chrome_options.add_argument('--headless') # 对于sogou来说, 这样需要输入验证码
         # chrome_options.add_argument('--no-sandbox')
-        # browser = webdriver.Chrome(os.path.join(os.path.dirname(__file__), 'driver', "chromedriver"), chrome_options=chrome_options)
-        browser = webdriver.PhantomJS(os.path.join(os.path.dirname(__file__), 'driver', "phantomjs")) # chrome has kinds of problems under cli only linux
-        browser.set_window_size(1024, 768)
+        browser = webdriver.Chrome(os.path.join(os.path.dirname(__file__), 'driver', "chromedriver"), chrome_options=chrome_options)
+        # browser = webdriver.PhantomJS(os.path.join(os.path.dirname(__file__), 'driver', "phantomjs")) # chrome has kinds of problems under cli only linux
+        # browser.set_window_size(1024, 768)
 
     try:
         browser.get("https://weixin.sogou.com/weixin?type=2&query={}".format(stock["name"]))
