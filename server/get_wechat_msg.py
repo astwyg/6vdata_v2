@@ -1,7 +1,7 @@
 '''
 不好搞, 现在搜狗的接口已经很难直接用爬虫爬取公众号链接了, 因此使用selenium驱动浏览器.
 '''
-import os, time
+import os, time, traceback
 import selenium.common
 from selenium import webdriver
 
@@ -24,14 +24,17 @@ from conf.log import server_logger
 
 
 def save_wechat_msg(stock, title, content, url):
-    c = Content(
-        code = stock["code"],
-        title = "[{}]{}".format(stock["name"], title),
-        info = content,
-        url = url[:255]
-    )
-    server_logger.debug("{} saved.".format(title))
-    c.save()
+    if get_env() == "debug":
+        server_logger.info("{} fetched".format(title))
+    else:
+        c = Content(
+            code = stock["code"],
+            title = "[{}]{}".format(stock["name"], title),
+            info = content,
+            url = url[:255]
+        )
+        server_logger.debug("{} saved.".format(title))
+        c.save()
 
 def get_wechat_msg(stock, article=10, sleep=3):
     '''
@@ -73,6 +76,7 @@ def get_wechat_msg(stock, article=10, sleep=3):
                 save_wechat_msg(stock, title, content, browser.current_url)
             except selenium.common.exceptions.NoSuchElementException:
                 server_logger.warning("{} met a NoSuchElementException")
+                server_logger.error(traceback.format_exc())
                 pass
             browser.close()
             windows = browser.window_handles
@@ -81,6 +85,7 @@ def get_wechat_msg(stock, article=10, sleep=3):
         browser.quit()
     except selenium.common.exceptions.WebDriverException:
         server_logger.warning("chrome failed")
+        server_logger.error(traceback.format_exc())
         pass
 
 if __name__ == "__main__":
