@@ -64,6 +64,8 @@ def get_wechat_msg(stock, article=10, sleep=30):
         browser = webdriver.Chrome(os.path.join(os.path.dirname(__file__), 'driver', "chromedriver1"), chrome_options=chrome_options)
 
         browser.delete_all_cookies()
+        browser.get("https://weixin.sogou.com/")
+        time.sleep(1)
         browser.get(
             "https://weixin.sogou.com/weixin?type=2&query={}".format(stock["name"]))  # 先访问一次主页, 然后插入已经输入验证码的cookie
         # cookies = {
