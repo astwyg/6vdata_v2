@@ -81,8 +81,6 @@ def get_wechat_msg(stock, article=10, sleep=3):
         browser.quit()
     except selenium.common.exceptions.WebDriverException:
         server_logger.warning("chrome failed")
-        browser = webdriver.Chrome(os.path.join(os.path.dirname(__file__), 'driver', "chromedriver"),
-                                   chrome_options=chrome_options)
         pass
 
 if __name__ == "__main__":

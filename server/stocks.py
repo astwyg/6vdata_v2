@@ -13,7 +13,7 @@ def get_stocks():
         data = pro.query('stock_basic', exchange='', list_status='L', fields='ts_code,symbol,name')
         server_logger.debug("stock data fetched {}".format(len(data)))
         data.to_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..',"data","stocks.csv"), encoding="utf-8")
-    except requests.exceptions.ConnectionError:
+    except Exception:
         data = pd.read_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..',"data","stocks.csv"), encoding = "utf-8")
         server_logger.warning("tushare connect failed , data from local storage")
 
