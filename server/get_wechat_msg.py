@@ -62,16 +62,19 @@ def get_wechat_msg(stock, article=10, sleep=3):
             'Accept-Language: zh-CN,zh;q=0.9')
 
         browser = webdriver.Chrome(os.path.join(os.path.dirname(__file__), 'driver', "chromedriver1"), chrome_options=chrome_options)
-        browser.delete_all_cookies()
+        browser.get("https://weixin.sogou.com/weixin?type=2&query={}".format(stock["name"])) # 先访问一次主页, 然后插入已经输入验证码的cookie
+        # browser.delete_all_cookies()
         cookies = {
             'ABTEST': '7|1558860870|v1',
-            'IPLOC': 'CN8100',
-            'SUID' : 'BC01DE9A771A910A000000005CEA5447',
-            'PHPSESSID' : 'kg0lsvv09l2rjolj09o0mu9pa5',
-            'SUV':'003F33BE9ADE01BC5CEA544765246715',
-            'SNUID':'13AE6E35AFB526693AFBDD61B049243C',
+            #'IPLOC': 'CN8100',
+            #'SUID' : 'BC01DE9A771A910A000000005CEA5447',
+            #'PHPSESSID' : 'kg0lsvv09l2rjolj09o0mu9pa5',
+            #'SUV':'003F33BE9ADE01BC5CEA544765246715',
+            #'SNUID':'13AE6E35AFB526693AFBDD61B049243C',
             'successCount':'1|Sun, 26 May 2019 08:59:43 GMT',
-            'JSESSIONID':'aaa-gk1GKzZ51dNVN9fRw'
+            'weixinIndexVisited':'1',
+            'seccodeRight':'success'
+            #'JSESSIONID':'aaa-gk1GKzZ51dNVN9fRw'
         }
         for name, value in cookies.items():
             browser.add_cookie({
