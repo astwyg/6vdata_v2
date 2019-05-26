@@ -31,7 +31,6 @@ def save_wechat_msg(stock, title, content, url):
         url = url[:255]
     )
     server_logger.debug("{} saved.".format(title))
-    print("success")
     c.save()
 
 def get_wechat_msg(stock, article=10, sleep=3):
@@ -67,6 +66,7 @@ def get_wechat_msg(stock, article=10, sleep=3):
                 content = browser.find_element_by_xpath("//div[@id='js_content']").get_attribute('innerHTML')
                 save_wechat_msg(stock, title, content, browser.current_url)
             except selenium.common.exceptions.NoSuchElementException:
+                server_logger.warning("{} met a NoSuchElementException")
                 pass
             browser.close()
             windows = browser.window_handles
@@ -74,6 +74,7 @@ def get_wechat_msg(stock, article=10, sleep=3):
 
         browser.quit()
     except selenium.common.exceptions.WebDriverException:
+        server_logger.warning("chrome failed")
         pass
 
 if __name__ == "__main__":

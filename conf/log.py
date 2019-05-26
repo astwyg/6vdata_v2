@@ -1,18 +1,21 @@
 import logging, sys, os
 import logging.handlers
 
+logging.basicConfig()
 server_logger = logging.getLogger("server.6vdata")
+server_logger.setLevel(level=logging.DEBUG)
 
-stream_handler = logging.StreamHandler(sys.stdout)
-stream_handler.setLevel(level=logging.DEBUG)
-server_logger.addHandler(stream_handler)
-
-file_handler = logging.handlers.TimedRotatingFileHandler(
+formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+filehandler = logging.handlers.TimedRotatingFileHandler(
     os.path.join(os.path.dirname(__file__), '..', "log","log.txt"),
-    when='D',
-    interval=1,
-    backupCount=30)
-file_handler.setLevel(level=logging.INFO)
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-file_handler.setFormatter(formatter)
-server_logger.addHandler(file_handler)
+    when='D', interval=1, backupCount=30)
+filehandler.suffix = "%Y-%m-%d_%H-%M-%S.log"
+filehandler.setFormatter(formatter)
+server_logger.addHandler(filehandler)
+
+
+if __name__ == "__main__":
+    server_logger.debug("debug ..")
+    server_logger.info("info")
+    server_logger.warning("warning")
+    print(1/0)
