@@ -45,7 +45,6 @@ def get_wechat_msg(stock, article=10, sleep=3):
     :return: 
     '''
     if get_env() == "debug":
-        chrome_options = webdriver.ChromeOptions()
         browser = webdriver.Chrome(os.path.join(os.path.dirname(__file__), 'driver', "chromedriver.exe"))
     else:
         chrome_options = webdriver.ChromeOptions()
@@ -55,11 +54,25 @@ def get_wechat_msg(stock, article=10, sleep=3):
         # chrome_options.add_argument("--disable-gpu")
         # chrome_options.add_argument("--disable-dev-shm-usage")
         chrome_options.add_argument(
-            'user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.{} Safari/537.36"'.format(random.randint(0,999)
-))
+            'user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.{} Safari/537.36"'.format(random.randint(0,999)))
+        chrome_options.add_argument('Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8')
+        chrome_options.add_argument(
+            'Accept-Encoding: gzip, deflate, br')
+        chrome_options.add_argument(
+            'Accept-Language: zh-CN,zh;q=0.9')
 
         browser = webdriver.Chrome(os.path.join(os.path.dirname(__file__), 'driver', "chromedriver1"), chrome_options=chrome_options)
         browser.delete_all_cookies()
+        browser.add_cookie({
+            'ABTEST': '7|1558860870|v1',
+            'IPLOC': 'CN8100',
+            'SUID' : 'BC01DE9A771A910A000000005CEA5447',
+            'PHPSESSID' : 'kg0lsvv09l2rjolj09o0mu9pa5',
+            'SUV':'003F33BE9ADE01BC5CEA544765246715',
+            'SNUID':'13AE6E35AFB526693AFBDD61B049243C',
+            'successCount':'1|Sun, 26 May 2019 08:59:43 GMT',
+            'JSESSIONID':'aaa-gk1GKzZ51dNVN9fRw'
+        })
         # browser = webdriver.PhantomJS(os.path.join(os.path.dirname(__file__), 'driver', "phantomjs")) # chrome has kinds of problems under cli only linux
         # browser.set_window_size(1024, 768)
 
