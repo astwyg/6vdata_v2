@@ -1,14 +1,21 @@
+import os
 import tushare as ts
-from conf.conf import get_conf
+import requests.exceptions
+import pandas as pd
 
+from conf.conf import get_conf
 from conf.log import server_logger
 
 def get_stocks():
-    ts.set_token(get_conf("tushare_token"))
-    pro = ts.pro_api()
-    data = pro.query('stock_basic', exchange='', list_status='L', fields='ts_code,symbol,name')
-
-    server_logger.debug("stock data fetched {}".format(len(data)))
+    try:
+        ts.set_token(get_conf("tushare_token"))
+        pro = ts.pro_api()
+        data = pro.query('stock_basic', exchange='', list_status='L', fields='ts_code,symbol,name')
+        server_logger.debug("stock data fetched {}".format(len(data)))
+        data.to_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..',"data","stocks.csv"), encoding="utf-8")
+    except requests.exceptions.ConnectionError:
+        data = pd.read_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..',"data","stocks.csv"), encoding = "utf-8")
+        server_logger.warning("tushare connect failed , data from local storage")
 
     stocks = []
     for _, row in data.iterrows():
