@@ -1,7 +1,7 @@
 '''
 不好搞, 现在搜狗的接口已经很难直接用爬虫爬取公众号链接了, 因此使用selenium驱动浏览器.
 '''
-import os, time, traceback, random
+import os, time, traceback, random, datetime
 import selenium.common
 from selenium import webdriver
 
@@ -67,13 +67,13 @@ def get_wechat_msg(stock, article=10, sleep=3):
         browser.get(
             "https://weixin.sogou.com/weixin?type=2&query={}".format(stock["name"]))  # 先访问一次主页, 然后插入已经输入验证码的cookie
         cookies = {
-            'ABTEST': '7|1558860870|v1',
+            #'ABTEST': '7|1558860870|v1',
             #'IPLOC': 'CN8100',
             #'SUID' : 'BC01DE9A771A910A000000005CEA5447',
             #'PHPSESSID' : 'kg0lsvv09l2rjolj09o0mu9pa5',
             #'SUV':'003F33BE9ADE01BC5CEA544765246715',
-            #'SNUID':'13AE6E35AFB526693AFBDD61B049243C',
-            'successCount':'1|Sun, 26 May 2019 08:59:43 GMT',
+            'SNUID':'9A27F9BD2722AEE0E9366DC027DF3E61',
+            'successCount':'1|{}'.format(datetime.datetime.utcnow().strftime("%a, %d %b %Y %H:%M:%S GMT")),
             'weixinIndexVisited':'1',
             'seccodeRight':'success'
             #'JSESSIONID':'aaa-gk1GKzZ51dNVN9fRw'
