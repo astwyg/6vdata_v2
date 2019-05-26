@@ -2,6 +2,7 @@
 不好搞, 现在搜狗的接口已经很难直接用爬虫爬取公众号链接了, 因此使用selenium驱动浏览器.
 '''
 import os, time
+import selenium.common
 from selenium import webdriver
 
 import sys
@@ -49,25 +50,31 @@ def get_wechat_msg(stock, article=10, sleep=3):
         chrome_options.add_argument('--no-sandbox')
         browser = webdriver.Chrome(os.path.join(os.path.dirname(__file__), 'driver', "chromedriver"), chrome_options=chrome_options)
 
-    browser.get("https://weixin.sogou.com/weixin?type=2&query={}".format(stock["name"]))
-    browser.find_element_by_link_text("搜索工具").click()
-    browser.find_element_by_link_text("全部时间").click()
-    browser.find_element_by_link_text("一天内").click()
+    try:
+        browser.get("https://weixin.sogou.com/weixin?type=2&query={}".format(stock["name"]))
+        browser.find_element_by_link_text("搜索工具").click()
+        browser.find_element_by_link_text("全部时间").click()
+        browser.find_element_by_link_text("一天内").click()
 
-    article_links = browser.find_elements_by_xpath("//h3/a")
-    for article_link in article_links:
-        article_link.click()
-        windows = browser.window_handles
-        browser.switch_to.window(windows[-1])
-        time.sleep(sleep) # wait js finish
-        title = browser.find_element_by_xpath("//h2[@id='activity-name']").text
-        content = browser.find_element_by_xpath("//div[@id='js_content']").get_attribute('innerHTML')
-        save_wechat_msg(stock, title, content, browser.current_url)
-        browser.close()
-        windows = browser.window_handles
-        browser.switch_to.window(windows[0])
+        article_links = browser.find_elements_by_xpath("//h3/a")
+        for article_link in article_links:
+            article_link.click()
+            windows = browser.window_handles
+            browser.switch_to.window(windows[-1])
+            time.sleep(sleep) # wait js finish
+            try:
+                title = browser.find_element_by_xpath("//h2[@id='activity-name']").text
+                content = browser.find_element_by_xpath("//div[@id='js_content']").get_attribute('innerHTML')
+                save_wechat_msg(stock, title, content, browser.current_url)
+            except selenium.common.exceptions.NoSuchElementException:
+                pass
+            browser.close()
+            windows = browser.window_handles
+            browser.switch_to.window(windows[0])
 
-    browser.quit()
+        browser.quit()
+    except selenium.common.exceptions.WebDriverException:
+        pass
 
 if __name__ == "__main__":
     all_stocks = get_stocks()
