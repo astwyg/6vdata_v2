@@ -72,7 +72,7 @@ def get_wechat_msg(stock, article=10, sleep=3):
             #'SUID' : 'BC01DE9A771A910A000000005CEA5447',
             #'PHPSESSID' : 'kg0lsvv09l2rjolj09o0mu9pa5',
             #'SUV':'003F33BE9ADE01BC5CEA544765246715',
-            'SNUID':'9A27F9BD2722AEE0E9366DC027DF3E61',
+            'SNUID':'9A27F9BD2722AEE0E9366DC027DF3E61',  # 已明确, 这个id是最重要的, 判断用户是否输入过验证码
             'successCount':'1|{}'.format(datetime.datetime.utcnow().strftime("%a, %d %b %Y %H:%M:%S GMT")),
             'weixinIndexVisited':'1',
             'seccodeRight':'success'
