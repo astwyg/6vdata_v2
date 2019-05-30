@@ -55,11 +55,13 @@ def get_wechat_msg(stock, article=10, sleep=30):
         # chrome_options.add_argument("--disable-dev-shm-usage")
         chrome_options.add_argument(
             'user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.{} Safari/537.36"'.format(random.randint(0,999)))
-        chrome_options.add_argument('Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8')
+        chrome_options.add_argument('Accept= "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8"')
         chrome_options.add_argument(
-            'Accept-Encoding: gzip, deflate, br')
+            'Accept-Encoding= "gzip, deflate, br"')
         chrome_options.add_argument(
-            'Accept-Language: zh-CN,zh;q=0.9')
+            'Accept-Language= "zh-CN,zh;q=0.9"')
+        chrome_options.add_argument(
+            'Host= "weixin.sogou.com"')
 
         browser = webdriver.Chrome(os.path.join(os.path.dirname(__file__), 'driver', "chromedriver1"), chrome_options=chrome_options)
 
