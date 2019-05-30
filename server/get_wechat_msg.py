@@ -64,8 +64,7 @@ def get_wechat_msg(stock, article=10, sleep=30):
             'Host= "weixin.sogou.com"')
 
         browser = webdriver.Chrome(os.path.join(os.path.dirname(__file__), 'driver', "chromedriver1")
-                                   , chrome_options=chrome_options
-                                   , service_args=["--verbose", "--log-path="+os.path.join(os.path.dirname(__file__), '..', "log","browser_log.txt")])
+                                   , chrome_options=chrome_options)
 
         browser.delete_all_cookies()
         browser.get("https://weixin.sogou.com/")
@@ -113,6 +112,8 @@ def get_wechat_msg(stock, article=10, sleep=30):
                 server_logger.warning("{} met a NoSuchElementException")
                 server_logger.error(traceback.format_exc())
                 server_logger.info(browser.page_source)
+                server_logger.debug("browser log")
+                server_logger.debug(browser.get_log('har'))
                 pass
             browser.close()
             windows = browser.window_handles
@@ -123,6 +124,8 @@ def get_wechat_msg(stock, article=10, sleep=30):
         server_logger.warning("chrome failed")
         server_logger.error(traceback.format_exc())
         server_logger.info(browser.page_source)
+        server_logger.debug("browser log")
+        server_logger.debug(browser.get_log('har'))
         pass
 
 if __name__ == "__main__":
