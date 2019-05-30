@@ -113,7 +113,7 @@ def get_wechat_msg(stock, article=10, sleep=30):
                 server_logger.error(traceback.format_exc())
                 server_logger.info(browser.page_source)
                 server_logger.debug("browser log")
-                server_logger.debug(browser.get_log('har'))
+                server_logger.debug(browser.get_log('browser'))
                 pass
             browser.close()
             windows = browser.window_handles
@@ -125,7 +125,7 @@ def get_wechat_msg(stock, article=10, sleep=30):
         server_logger.error(traceback.format_exc())
         server_logger.info(browser.page_source)
         server_logger.debug("browser log")
-        server_logger.debug(browser.get_log('har'))
+        server_logger.debug(browser.get_log('browser'))
         pass
 
 if __name__ == "__main__":
