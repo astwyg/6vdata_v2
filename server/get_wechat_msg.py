@@ -111,6 +111,8 @@ def get_wechat_msg(stock, article=10, sleep=30):
                 server_logger.warning("{} met a NoSuchElementException")
                 server_logger.error(traceback.format_exc())
                 server_logger.info(browser.page_source)
+                server_logger.debug("browser info:")
+                server_logger.debug(browser.get_log("performance"))
                 pass
             browser.close()
             windows = browser.window_handles
@@ -121,6 +123,8 @@ def get_wechat_msg(stock, article=10, sleep=30):
         server_logger.warning("chrome failed")
         server_logger.error(traceback.format_exc())
         server_logger.info(browser.page_source)
+        server_logger.debug("browser info:")
+        server_logger.debug(browser.get_log("performance"))
         pass
 
 if __name__ == "__main__":
