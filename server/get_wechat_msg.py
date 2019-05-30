@@ -4,6 +4,7 @@
 import os, time, traceback, random, datetime
 import selenium.common
 from selenium import webdriver
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 import sys
 sys.path.extend([os.path.join(os.path.dirname(__file__), '..'),])
@@ -63,8 +64,12 @@ def get_wechat_msg(stock, article=10, sleep=30):
         chrome_options.add_argument(
             'Host= "weixin.sogou.com"')
 
+        caps = DesiredCapabilities.CHROME
+        caps['loggingPrefs'] = {'performance': 'ALL'}
+
         browser = webdriver.Chrome(os.path.join(os.path.dirname(__file__), 'driver', "chromedriver1")
-                                   , chrome_options=chrome_options)
+                                   , chrome_options=chrome_options
+                                   , desired_capabilities=caps)
 
         browser.delete_all_cookies()
         browser.get("https://weixin.sogou.com/")
@@ -125,10 +130,7 @@ def get_wechat_msg(stock, article=10, sleep=30):
         server_logger.error(traceback.format_exc())
         server_logger.info(browser.page_source)
         server_logger.debug("browser log")
-        server_logger.debug(browser.get_log('browser'))
-        server_logger.debug(browser.get_log('driver'))
-        server_logger.debug(browser.get_log('client'))
-        server_logger.debug(browser.get_log('server'))
+        server_logger.debug(browser.get_log('performance'))
         pass
 
 if __name__ == "__main__":
