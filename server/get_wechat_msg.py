@@ -37,6 +37,7 @@ def save_wechat_msg(stock, title, content, url):
         server_logger.debug("{} saved.".format(title))
         c.save()
 
+
 def get_wechat_msg(stock, article=10, sleep=30):
     '''
     
@@ -55,6 +56,7 @@ def get_wechat_msg(stock, article=10, sleep=30):
         # chrome_options.add_argument("--disable-gpu")
         # chrome_options.add_argument("--disable-dev-shm-usage")
 
+        # 无需, 也不应该设置headers
         # chrome_options.add_argument(
         #     'user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.{} Safari/537.36"'.format(random.randint(0,999)))
         # chrome_options.add_argument('Accept=text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8')
