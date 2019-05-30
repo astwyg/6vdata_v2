@@ -139,4 +139,8 @@ def get_wechat_msg(stock, article=10, sleep=30):
 if __name__ == "__main__":
     all_stocks = get_stocks()
     for stock in all_stocks:
-        get_wechat_msg(stock)
+        try:
+            get_wechat_msg(stock)
+        except Exception:
+            server_logger.warning("unknown error")
+            server_logger.error(traceback.format_exc())
