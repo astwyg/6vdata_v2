@@ -126,6 +126,9 @@ def get_wechat_msg(stock, article=10, sleep=30):
         server_logger.info(browser.page_source)
         server_logger.debug("browser log")
         server_logger.debug(browser.get_log('browser'))
+        server_logger.debug(browser.get_log('driver'))
+        server_logger.debug(browser.get_log('client'))
+        server_logger.debug(browser.get_log('server'))
         pass
 
 if __name__ == "__main__":
