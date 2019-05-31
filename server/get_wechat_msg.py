@@ -140,6 +140,8 @@ if __name__ == "__main__":
     all_stocks = get_stocks()
     for stock in all_stocks:
         try:
+            if get_env() == "product":
+                os.system("ps -ef | grep chrom | awk '{print $2}' | xargs kill -9 ")
             get_wechat_msg(stock)
         except Exception:
             server_logger.warning("unknown error")
