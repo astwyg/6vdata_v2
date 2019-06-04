@@ -1,10 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    主页
-</body>
-</html>
+{% extends "pages/base.html" %}
+
+{% block body %}
+<div class="jumbotron">
+  <h1 class="display-4">六维数据</h1>
+  <p class="lead">面向A股市场, 提供资讯汇总和数据服务, 第一阶段计划开放公众号数据和年报数据.</p>
+  <hr class="my-4">
+  <p>本站是开源的, 欢迎贡献 <a href="https://github.com/astwyg/6vdata_v2">6vdata_v2</a></p>
+  <p style="margin-top: -15px;">还有一些工具位于 <a href="https://github.com/astwyg/stock_analysis">stock_analysis</a></p>
+  <p class="lead">
+    <a class="btn btn-primary btn-lg" href="#" role="button">更多</a>
+  </p>
+</div>
+{% endblock %}
