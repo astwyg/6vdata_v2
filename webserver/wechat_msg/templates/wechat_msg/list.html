@@ -1,0 +1,36 @@
+{% extends "pages/base.html" %}
+
+{% block body %}
+<div class="row" style="margin-top: 20px;">
+	<div class="col-xs-12 col-md-8 col-md-offset-2">
+		<table class="table table-striped table-hover">
+			<thead>
+				<tr>
+					<th> 时间 </th>
+          <th> 代码 </th>
+					<th> 标题 </th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for content in contents %}
+				<tr>
+					<th>{{content.time|date:'Y-m-d'}}</th>
+          <th>{{content.code}}</th>
+					<th><a href="/wechat_msg/{{ content.id }}" role="button">{{ content.title }}</a></th>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<nav>
+		  <ul class="pagination">
+		    <li class="page-item {% if hasPrev %}{% else %}disabled{% endif %}">
+		    	<a class="page-link" {% if hasPrev %}href="/wechat_msg/?page={{prevPage}}"{% endif %}><span>&larr;</span> 上一页</a>
+		    </li>
+		    <li class="page-item {% if hasNext %}{% else %}disabled{% endif %}">
+		    	<a class="page-link" {% if hasNext %}href="/wechat_msg/?page={{nextPage}}"{% endif %}>下一页 <span>&rarr;</span></a>
+		    </li>
+		  </ul>
+		</nav>
+	</div>
+</div>
+{% endblock %}

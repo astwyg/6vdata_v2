@@ -17,8 +17,13 @@ from django.contrib import admin
 from django.urls import path
 
 import pages.views as pages_views
+import wechat_msg.views as wechat_msg_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path(r"", pages_views.index),
+
+    # 微信垃圾站
+    path(r"wechat_msg/", wechat_msg_views.list_view),
+    path(r"wechat_msg/<int:content_id>/", wechat_msg_views.content_view),
 ]

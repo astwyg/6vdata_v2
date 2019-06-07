@@ -1,0 +1,26 @@
+{% extends "pages/base.html" %}
+
+{% block title%}{{content.title}}-六维数据{% endblock %}
+{% block keywords %} 热点,{{content.code}},{{content.title}},{% endblock %}
+
+
+{% block body %}
+    <div class="row">
+        <div class="col-xs-12 col-md-10 col-md-offset-1">
+          <span class="badge badge-secondary">{{content.code}}</span>
+          <h1>{{ content.title }}</h1>
+        </div>
+        <div class="col-xs-12 col-md-8 col-md-offset-1">
+            {{ content.info | safe }}
+        </div>
+        <div class="col-xs-12 col-md-2">
+            <div class="list-group">
+                <a href="#" class="list-group-item disabled"> 热门推荐 </a>
+                {% for r in recommend %}
+                    <a type="button" class="list-group-item" href="/wechat_msg/show/{{ r.id }}/">{{ r.title }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
