@@ -6,7 +6,7 @@ from .models import Content
 
 def list_view(request):
     contents = Content.objects.all().order_by('-id')
-    paginator = Paginator(contents, 50)
+    paginator = Paginator(contents, 20)
     page = request.GET.get('page')
     try:
         infos = paginator.page(page)
@@ -23,6 +23,6 @@ def list_view(request):
 def content_view(request, content_id):
     content = Content.objects.get(id=content_id)
     # recommend = Content.objects.values("title","id").order_by("?")[:20]
-    sample = random.sample(range(Content.objects.count()), 1)
+    sample = random.sample(range(Content.objects.count()), 10)
     recommend = [Content.objects.values("title","id").get(id=i) for i in sample]
     return render(request, "wechat_msg/content.html", locals())
