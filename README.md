@@ -6,7 +6,7 @@
 
 * python 3.6
 * python依赖: 见requirments.txt
-* mongodb 3.2.22
+* mongodb 3.2.22 `use site6vdata`
 * mysql 5.7.26
 
 # 目录结构
