@@ -10,7 +10,7 @@ import sys
 sys.path.extend([os.path.join(os.path.dirname(__file__), '..'),])
 from conf.conf import get_env
 
-if get_env() == "debug":
+if get_env() != "debug":
     import pymysql
     pymysql.install_as_MySQLdb()
 
