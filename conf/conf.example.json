@@ -1,6 +1,10 @@
 {
   "SECRET_KEY":"",
-  "mongo_db":"mongodb://:27017/",
+  "DEBUG":true,
+  "mongo_db":"",
   "mongo_username":"",
-  "mongo_password":""
+  "mongo_password":"",
+  "mysql_username":"",
+  "mysql_password":"",
+  "tushare_token":""
 }
