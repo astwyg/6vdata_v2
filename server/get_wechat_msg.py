@@ -41,6 +41,7 @@ def save_wechat_msg(stock, title, content, url):
         server_logger.debug("{} saved.".format(title))
         c.save()
 
+
 browser = None # 尝试一下不换浏览器
 if get_env() == "debug":
     browser = webdriver.Chrome(os.path.join(os.path.dirname(__file__), 'driver', "chromedriver.exe"))
@@ -59,7 +60,7 @@ else:
                                , chrome_options=chrome_options
                                , desired_capabilities=caps)
 
-    # browser.delete_all_cookies() # 2019-7-14 17:05:46 删cookies不好用了
+    browser.delete_all_cookies() # 2019-7-14 17:05:46 删cookies不好用了
     browser.get("https://weixin.sogou.com/")
     time.sleep(1)
     cookies = {
@@ -67,7 +68,7 @@ else:
         #'IPLOC': 'CN8100',
         #'SUID' : 'BC01DE9A771A910A000000005CEA5447',
         #'PHPSESSID' : 'kg0lsvv09l2rjolj09o0mu9pa5',
-        #'SUV':'003F33BE9ADE01BC5CEA544765246715',
+        'SUV':'00FB939F674AC01A5D2AF014B115E988',
         'SNUID':'1AC04A67771A910A000000005D2AEFBF',  # 已明确, 这个id是最重要的, 判断用户是否输入过验证码
         'successCount':'1|{}'.format(datetime.datetime.utcnow().strftime("%a, %d %b %Y %H:%M:%S GMT")),
         'weixinIndexVisited':'1',
