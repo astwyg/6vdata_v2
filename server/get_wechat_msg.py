@@ -42,7 +42,7 @@ def save_wechat_msg(stock, title, content, url):
         c.save()
 
 
-def get_wechat_msg(stock, article=10, sleep=30):
+def get_wechat_msg(stock, article=1, sleep=30):
     '''
     
     :param stock: name and code
@@ -111,7 +111,7 @@ def get_wechat_msg(stock, article=10, sleep=30):
         browser.find_element_by_link_text("一天内").click()
 
         article_links = browser.find_elements_by_xpath("//h3/a")
-        for article_link in article_links:
+        for article_link in article_links[:article]:
             article_link.click()
             windows = browser.window_handles
             browser.switch_to.window(windows[-1])
