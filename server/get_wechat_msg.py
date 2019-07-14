@@ -41,6 +41,46 @@ def save_wechat_msg(stock, title, content, url):
         server_logger.debug("{} saved.".format(title))
         c.save()
 
+browser = None # 尝试一下不换浏览器
+if get_env() == "debug":
+    browser = webdriver.Chrome(os.path.join(os.path.dirname(__file__), 'driver', "chromedriver.exe"))
+else:
+    chrome_options = webdriver.ChromeOptions()
+    # chrome_options.add_argument('--headless') # 对于sogou来说, 这样需要输入验证码
+    chrome_options.add_argument('--no-sandbox')
+    # chrome_options.add_argument("--disable-extensions")
+    # chrome_options.add_argument("--disable-gpu")
+    # chrome_options.add_argument("--disable-dev-shm-usage")
+
+    caps = DesiredCapabilities.CHROME
+    caps['loggingPrefs'] = {'performance': 'ALL'}
+
+    browser = webdriver.Chrome(os.path.join(os.path.dirname(__file__), 'driver', "chromedriver1")
+                               , chrome_options=chrome_options
+                               , desired_capabilities=caps)
+
+    # browser.delete_all_cookies() # 2019-7-14 17:05:46 删cookies不好用了
+    browser.get("https://weixin.sogou.com/")
+    time.sleep(1)
+    cookies = {
+        #'ABTEST': '7|1558860870|v1',
+        #'IPLOC': 'CN8100',
+        #'SUID' : 'BC01DE9A771A910A000000005CEA5447',
+        #'PHPSESSID' : 'kg0lsvv09l2rjolj09o0mu9pa5',
+        #'SUV':'003F33BE9ADE01BC5CEA544765246715',
+        'SNUID':'1AC04A67771A910A000000005D2AEFBF',  # 已明确, 这个id是最重要的, 判断用户是否输入过验证码
+        'successCount':'1|{}'.format(datetime.datetime.utcnow().strftime("%a, %d %b %Y %H:%M:%S GMT")),
+        'weixinIndexVisited':'1',
+        'seccodeRight':'success'
+        #'JSESSIONID':'aaa-gk1GKzZ51dNVN9fRw'
+    }
+    for name, value in cookies.items():
+        browser.add_cookie({
+            'name': name,
+            'value': value
+        })
+
+
 
 def get_wechat_msg(stock, article=1, sleep=30):
     '''
@@ -50,59 +90,6 @@ def get_wechat_msg(stock, article=1, sleep=30):
     :param sleep: 等待时间, 秒
     :return: 
     '''
-    if get_env() == "debug":
-        browser = webdriver.Chrome(os.path.join(os.path.dirname(__file__), 'driver', "chromedriver.exe"))
-    else:
-        chrome_options = webdriver.ChromeOptions()
-        # chrome_options.add_argument('--headless') # 对于sogou来说, 这样需要输入验证码
-        chrome_options.add_argument('--no-sandbox')
-        # chrome_options.add_argument("--disable-extensions")
-        # chrome_options.add_argument("--disable-gpu")
-        # chrome_options.add_argument("--disable-dev-shm-usage")
-
-        # 无需, 也不应该设置headers
-        # chrome_options.add_argument(
-        #     'user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.{} Safari/537.36"'.format(random.randint(0,999)))
-        # chrome_options.add_argument('Accept=text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8')
-        # chrome_options.add_argument(
-        #     'Accept-Encoding=gzip, deflate, br')
-        # chrome_options.add_argument(
-        #     'Accept-Language=zh-CN,zh;q=0.9')
-        # chrome_options.add_argument(
-        #     'Host=weixin.sogou.com')
-
-        caps = DesiredCapabilities.CHROME
-        caps['loggingPrefs'] = {'performance': 'ALL'}
-
-        browser = webdriver.Chrome(os.path.join(os.path.dirname(__file__), 'driver', "chromedriver1")
-                                   , chrome_options=chrome_options
-                                   , desired_capabilities=caps)
-
-        browser.delete_all_cookies()
-        browser.get("https://weixin.sogou.com/")
-        time.sleep(1)
-        browser.get(
-            "https://weixin.sogou.com/weixin?type=2&query={}".format(stock["name"]))  # 先访问一次主页, 然后插入已经输入验证码的cookie
-        # cookies = {
-        #     #'ABTEST': '7|1558860870|v1',
-        #     #'IPLOC': 'CN8100',
-        #     #'SUID' : 'BC01DE9A771A910A000000005CEA5447',
-        #     #'PHPSESSID' : 'kg0lsvv09l2rjolj09o0mu9pa5',
-        #     #'SUV':'003F33BE9ADE01BC5CEA544765246715',
-        #     'SNUID':'5B6A18D3BCB8347A5F713FE5BDD5679A',  # 已明确, 这个id是最重要的, 判断用户是否输入过验证码
-        #     'successCount':'1|{}'.format(datetime.datetime.utcnow().strftime("%a, %d %b %Y %H:%M:%S GMT")),
-        #     'weixinIndexVisited':'1',
-        #     'seccodeRight':'success'
-        #     #'JSESSIONID':'aaa-gk1GKzZ51dNVN9fRw'
-        # }
-        # for name, value in cookies.items():
-        #     browser.add_cookie({
-        #         'name': name,
-        #         'value': value
-        #     })
-
-        # browser = webdriver.PhantomJS(os.path.join(os.path.dirname(__file__), 'driver', "phantomjs")) # chrome has kinds of problems under cli only linux
-        # browser.set_window_size(1024, 768)
 
     try:
         browser.get("https://weixin.sogou.com/weixin?type=2&query={}".format(stock["name"]))
@@ -131,7 +118,7 @@ def get_wechat_msg(stock, article=1, sleep=30):
             windows = browser.window_handles
             browser.switch_to.window(windows[0])
 
-        browser.quit()
+        # browser.quit()
     except selenium.common.exceptions.WebDriverException:
         server_logger.warning("chrome failed")
         server_logger.error(traceback.format_exc())
@@ -144,8 +131,8 @@ if __name__ == "__main__":
     all_stocks = get_stocks()
     for stock in all_stocks:
         try:
-            if get_env() == "product":
-                os.system("ps -ef | grep chrom | awk '{print $2}' | xargs kill -9 ")
+            # if get_env() == "product":
+            #     os.system("ps -ef | grep chrom | awk '{print $2}' | xargs kill -9 ")
             get_wechat_msg(stock)
         except Exception:
             server_logger.warning("unknown error")
