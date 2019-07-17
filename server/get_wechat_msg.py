@@ -83,7 +83,7 @@ else:
 
 
 
-def get_wechat_msg(stock, article=1, sleep=30):
+def get_wechat_msg(stock, article=1, sleep=180): # 30 will be banned
     '''
     
     :param stock: name and code
